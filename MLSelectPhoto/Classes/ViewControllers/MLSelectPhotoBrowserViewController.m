@@ -278,6 +278,14 @@ static NSString *_cellIdentifier = @"collectionViewCell";
         self.toolBar.hidden = !self.toolBar.isHidden;
     }
 }
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    self.navigationController.navigationBar.hidden = NO;
+    self.toolBar.hidden = NO;
+}
+
 #pragma mark - <UIScrollViewDelegate>
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGRect tempF = self.collectionView.frame;
