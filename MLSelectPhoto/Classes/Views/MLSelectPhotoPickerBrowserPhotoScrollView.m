@@ -86,42 +86,6 @@
     
 }
 
-- (CGRect )setMaxMinZoomScalesForCurrentBounds:(UIImageView *)imageView {
-    // Sizes
-    CGSize boundsSize = [UIScreen mainScreen].bounds.size;
-    CGSize imageSize = imageView.image.size;
-    if (imageSize.width == 0 && imageSize.height == 0) {
-        return imageView.frame;
-    }
-    
-    CGFloat xScale = boundsSize.width / imageSize.width;    // the scale needed to perfectly fit the image width-wise
-    CGFloat yScale = boundsSize.height / imageSize.height;  // the scale needed to perfectly fit the image height-wise
-    CGFloat minScale = MIN(xScale, yScale);                 // use minimum of these to allow the image to become fully visible
-    // Image is smaller than screen so no zooming!
-    if (xScale >= 1 && yScale >= 1) {
-        minScale = MIN(xScale, yScale);
-    }
-    
-    CGRect frameToCenter = CGRectMake(0, 0, imageSize.width * minScale, imageSize.height * minScale);
-    
-    // Horizontally
-    if (frameToCenter.size.width < boundsSize.width) {
-        frameToCenter.origin.x = floorf((boundsSize.width - frameToCenter.size.width) / 2.0);
-    } else {
-        frameToCenter.origin.x = 0;
-    }
-    
-    // Vertically
-    if (frameToCenter.size.height < boundsSize.height) {
-        frameToCenter.origin.y = floorf((boundsSize.height - frameToCenter.size.height) / 2.0);
-    } else {
-        frameToCenter.origin.y = 0;
-    }
-    
-    return frameToCenter;
-}
-
-
 #pragma mark - Image
 // Get and display image
 - (void)displayImage {
@@ -155,22 +119,22 @@
 
 #pragma mark - Loading Progress
 #pragma mark - Setup
-- (CGFloat)initialZoomScaleWithMinScale {
-    CGFloat zoomScale = self.minimumZoomScale;
-    if (_photoImageView) {
-        // Zoom image to fill if the aspect ratios are fairly similar
-        CGSize boundsSize = self.bounds.size;
-        CGSize imageSize = _photoImageView.image.size;
-        CGFloat boundsAR = boundsSize.width / boundsSize.height;
-        CGFloat imageAR = imageSize.width / imageSize.height;
-        CGFloat xScale = boundsSize.width / imageSize.width;
-
-        if (ABS(boundsAR - imageAR) < 0.17) {
-            zoomScale = xScale;
-        }
-    }
-    return zoomScale;
-}
+//- (CGFloat)initialZoomScaleWithMinScale {
+//    CGFloat zoomScale = self.minimumZoomScale;
+//    if (_photoImageView) {
+//        // Zoom image to fill if the aspect ratios are fairly similar
+//        CGSize boundsSize = self.bounds.size;
+//        CGSize imageSize = _photoImageView.image.size;
+//        CGFloat boundsAR = boundsSize.width / boundsSize.height;
+//        CGFloat imageAR = imageSize.width / imageSize.height;
+//        CGFloat xScale = boundsSize.width / imageSize.width;
+//
+//        if (ABS(boundsAR - imageAR) < 0.17) {
+//            zoomScale = xScale;
+//        }
+//    }
+//    return zoomScale;
+//}
 
 - (void)setMaxMinZoomScalesForCurrentBounds {
     
@@ -206,12 +170,16 @@
         minScale = MIN(xScale, yScale);
     }
     
+    if (minScale >= 3) {
+        minScale = 1;
+    }
+    
     // Set min/max zoom
     self.maximumZoomScale = maxScale;
     self.minimumZoomScale = minScale;
     
     // Initial zoom
-    self.zoomScale = [self initialZoomScaleWithMinScale];
+    self.zoomScale = minScale;
     
     // If we're zooming to fill then centralise
     if (self.zoomScale != minScale) {
@@ -272,7 +240,7 @@
 - (void)handleDoubleTap:(CGPoint)touchPoint {
     
     // Zoom
-    if (self.zoomScale != self.minimumZoomScale && self.zoomScale != [self initialZoomScaleWithMinScale]) {
+    if (self.zoomScale != self.minimumZoomScale) {
         
         // Zoom out
         [self setZoomScale:self.minimumZoomScale animated:YES];
