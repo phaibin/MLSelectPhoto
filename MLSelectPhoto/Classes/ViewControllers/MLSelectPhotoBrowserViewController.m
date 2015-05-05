@@ -249,7 +249,6 @@ static NSString *_cellIdentifier = @"collectionViewCell";
         
         UIView *scrollBoxView = [[UIView alloc] init];
         scrollBoxView.frame = [UIScreen mainScreen].bounds;
-        scrollBoxView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [cell.contentView addSubview:scrollBoxView];
         
         MLSelectPhotoPickerBrowserPhotoScrollView *scrollView =  [[MLSelectPhotoPickerBrowserPhotoScrollView alloc] init];
@@ -268,6 +267,8 @@ static NSString *_cellIdentifier = @"collectionViewCell";
         }else if (self.currentPage == self.photos.count - 1 && scrollView.ml_x >= 0 && !collectionView.isDragging) {
             scrollView.ml_x = -ZLPickerColletionViewPadding;
         }
+        
+        scrollView.ml_y = -ZLPickerColletionViewPadding;
     }
     return cell;
 }
