@@ -11,6 +11,7 @@
 #import "Example3ViewController.h"
 #import "MLSelectPhotoAssets.h"
 #import "MLSelectPhotoPickerAssetsViewController.h"
+#import "MLSelectPhotoBrowserViewController.h"
 
 @interface Example3ViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -92,7 +93,10 @@
 
 #pragma mark - <UITableViewDelegate>
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    MLSelectPhotoBrowserViewController *browserVc = [[MLSelectPhotoBrowserViewController alloc] init];
+    browserVc.currentPage = indexPath.row;
+    browserVc.photos = self.assets;
+    [self.navigationController pushViewController:browserVc animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

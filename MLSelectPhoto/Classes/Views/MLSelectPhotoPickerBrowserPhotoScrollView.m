@@ -20,6 +20,9 @@
 
 @end
 
+// 默认显示保存的sheet
+static BOOL isHaveShowSheet = YES;
+
 @implementation MLSelectPhotoPickerBrowserPhotoScrollView
 
 - (id)init{
@@ -55,14 +58,23 @@
     return self;
 }
 
+- (void)setSheet:(UIActionSheet *)sheet{
+    _sheet = sheet;
+    if (!sheet) {
+        isHaveShowSheet = NO;
+    }
+}
+
 - (void)longGesture:(UILongPressGestureRecognizer *)gesture{
     if (gesture.state == UIGestureRecognizerStateBegan) {
         
-        if (!self.sheet) {
+        if (!self.sheet && isHaveShowSheet) {
             self.sheet = [[UIActionSheet alloc] initWithTitle:@"提示" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"保存到相册" otherButtonTitles:nil, nil];
         }
-
-        [self.sheet showInView:self];
+        
+        if (isHaveShowSheet) {
+            [self.sheet showInView:self];
+        }
     }
 }
 

@@ -39,6 +39,9 @@ static NSString *_cellIdentifier = @"collectionViewCell";
 
 @end
 
+// 默认显示保存的sheet
+static BOOL isHaveShowSheet = YES;
+
 @implementation MLSelectPhotoBrowserViewController
 
 #pragma mark - getter
@@ -144,6 +147,13 @@ static NSString *_cellIdentifier = @"collectionViewCell";
     
     [self reloadData];
     self.makeView.text = [NSString stringWithFormat:@"%ld",self.photos.count];
+}
+
+- (void)setSheet:(UIActionSheet *)sheet{
+    _sheet = sheet;
+    if (!sheet) {
+        isHaveShowSheet = NO;
+    }
 }
 
 #pragma mark - Life cycle
@@ -253,7 +263,9 @@ static NSString *_cellIdentifier = @"collectionViewCell";
         [cell.contentView addSubview:scrollBoxView];
         
         MLSelectPhotoPickerBrowserPhotoScrollView *scrollView =  [[MLSelectPhotoPickerBrowserPhotoScrollView alloc] init];
-        scrollView.sheet = self.sheet;
+        if (self.sheet || isHaveShowSheet == NO) {
+            scrollView.sheet = self.sheet;
+        }
         scrollView.backgroundColor = [UIColor clearColor];
         // 为了监听单击photoView事件
         scrollView.frame = [UIScreen mainScreen].bounds;
