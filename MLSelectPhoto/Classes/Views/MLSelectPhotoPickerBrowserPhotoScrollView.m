@@ -18,10 +18,9 @@
     MLSelectPhotoPickerBrowserPhotoImageView *_photoImageView;
 }
 
-@end
+@property (assign,nonatomic) BOOL isHiddenShowSheet;
 
-// 默认显示保存的sheet
-static BOOL isHaveShowSheet = YES;
+@end
 
 @implementation MLSelectPhotoPickerBrowserPhotoScrollView
 
@@ -53,7 +52,6 @@ static BOOL isHaveShowSheet = YES;
         
         UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longGesture:)];
         [self addGestureRecognizer:longGesture];
-        
     }
     return self;
 }
@@ -61,18 +59,18 @@ static BOOL isHaveShowSheet = YES;
 - (void)setSheet:(UIActionSheet *)sheet{
     _sheet = sheet;
     if (!sheet) {
-        isHaveShowSheet = NO;
+        self.isHiddenShowSheet = sheet;
     }
 }
 
 - (void)longGesture:(UILongPressGestureRecognizer *)gesture{
     if (gesture.state == UIGestureRecognizerStateBegan) {
         
-        if (!self.sheet && isHaveShowSheet) {
+        if (!self.isHiddenShowSheet) {
             self.sheet = [[UIActionSheet alloc] initWithTitle:@"提示" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"保存到相册" otherButtonTitles:nil, nil];
         }
         
-        if (isHaveShowSheet) {
+        if (!self.isHiddenShowSheet) {
             [self.sheet showInView:self];
         }
     }
@@ -85,6 +83,7 @@ static BOOL isHaveShowSheet = YES;
 }
 
 - (void)dealloc {
+    self.isHiddenShowSheet = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

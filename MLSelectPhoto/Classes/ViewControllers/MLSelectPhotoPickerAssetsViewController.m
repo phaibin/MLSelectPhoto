@@ -32,8 +32,8 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 @property (nonatomic , strong) MLSelectPhotoPickerCollectionView *collectionView;
 
 // 标记View
-@property (weak,nonatomic) UILabel *makeView;
-@property (weak,nonatomic) UIButton *previewBtn;
+@property (strong,nonatomic) UILabel *makeView;
+@property (strong,nonatomic) UIButton *previewBtn;
 @property (strong,nonatomic) UIButton *doneBtn;
 @property (strong,nonatomic) UIToolbar *toolBar;
 

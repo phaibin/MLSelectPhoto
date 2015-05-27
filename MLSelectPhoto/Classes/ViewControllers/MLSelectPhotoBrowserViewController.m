@@ -37,10 +37,8 @@ static NSString *_cellIdentifier = @"collectionViewCell";
 // 是否是编辑模式
 @property (assign,nonatomic) BOOL isEditing;
 
+@property (assign,nonatomic) BOOL isShowShowSheet;
 @end
-
-// 默认显示保存的sheet
-static BOOL isHaveShowSheet = YES;
 
 @implementation MLSelectPhotoBrowserViewController
 
@@ -152,12 +150,13 @@ static BOOL isHaveShowSheet = YES;
 - (void)setSheet:(UIActionSheet *)sheet{
     _sheet = sheet;
     if (!sheet) {
-        isHaveShowSheet = NO;
+        self.isShowShowSheet = NO;
     }
 }
 
 #pragma mark - Life cycle
 - (void)dealloc{
+    self.isShowShowSheet = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -165,7 +164,6 @@ static BOOL isHaveShowSheet = YES;
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor blackColor];
-    
 }
 
 #pragma mark -初始化底部ToorBar
@@ -263,7 +261,7 @@ static BOOL isHaveShowSheet = YES;
         [cell.contentView addSubview:scrollBoxView];
         
         MLSelectPhotoPickerBrowserPhotoScrollView *scrollView =  [[MLSelectPhotoPickerBrowserPhotoScrollView alloc] init];
-        if (self.sheet || isHaveShowSheet == NO) {
+        if (self.sheet || self.isShowShowSheet == YES) {
             scrollView.sheet = self.sheet;
         }
         scrollView.backgroundColor = [UIColor clearColor];
