@@ -22,6 +22,7 @@
              @"Multiple choice Photo Limit 5",
              @"Records of gravity Multiple choice Photo",
              @"Multiple choice video",
+             @"Weibo Multiple Model",
              ];
 }
 

@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "MLSelectPhotoAssets.h"
 
+@class MLSelectPhotoPickerCollectionView;
 // 展示状态
 typedef NS_ENUM(NSUInteger, ZLPickerCollectionViewShowOrderStatus){
     ZLPickerCollectionViewShowOrderStatusTimeDesc = 0, // 升序
@@ -20,6 +21,10 @@ typedef NS_ENUM(NSUInteger, ZLPickerCollectionViewShowOrderStatus){
 @protocol ZLPhotoPickerCollectionViewDelegate <NSObject>
 // 选择相片就会调用
 - (void) pickerCollectionViewDidSelected:(MLSelectPhotoPickerCollectionView *) pickerCollectionView deleteAsset:(MLSelectPhotoAssets *)deleteAssets;
+
+// 点击拍照就会调用
+- (void)pickerCollectionViewDidCameraSelect:(MLSelectPhotoPickerCollectionView *) pickerCollectionView;
+
 @end
 
 @interface MLSelectPhotoPickerCollectionView : UICollectionView
@@ -35,7 +40,8 @@ typedef NS_ENUM(NSUInteger, ZLPickerCollectionViewShowOrderStatus){
 @property (nonatomic , weak) id <ZLPhotoPickerCollectionViewDelegate> collectionViewDelegate;
 // 限制最大数
 @property (nonatomic , assign) NSInteger minCount;
-
+// 置顶展示图片
+@property (assign,nonatomic) BOOL topShowPhotoPicker;
 // 选中的索引值，为了防止重用
 @property (nonatomic , strong) NSMutableArray *selectsIndexPath;
 // 记录选中的值

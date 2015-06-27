@@ -90,6 +90,11 @@
     });
 }
 
+- (void)setTopShowPhotoPicker:(BOOL)topShowPhotoPicker{
+    _topShowPhotoPicker = topShowPhotoPicker;
+    self.groupVc.topShowPhotoPicker = topShowPhotoPicker;
+}
+
 - (void)setDelegate:(id<ZLPhotoPickerViewControllerDelegate>)delegate{
     _delegate = delegate;
     self.groupVc.delegate = delegate;

@@ -26,7 +26,7 @@ static NSString *const _cellIdentifier = @"cell";
 static NSString *const _footerIdentifier = @"FooterView";
 static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 
-@interface MLSelectPhotoPickerAssetsViewController () <ZLPhotoPickerCollectionViewDelegate>
+@interface MLSelectPhotoPickerAssetsViewController () <ZLPhotoPickerCollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 // View
 @property (nonatomic , strong) MLSelectPhotoPickerCollectionView *collectionView;
@@ -261,12 +261,64 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
     [self setupAssets];
 }
 
+- (void)pickerCollectionViewDidCameraSelect:(MLSelectPhotoPickerCollectionView *)pickerCollectionView{
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIImagePickerController *ctrl = [[UIImagePickerController alloc] init];
+        ctrl.delegate = self;
+        ctrl.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:ctrl animated:YES completion:nil];
+    }else{
+        NSLog(@"请在真机使用!");
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        // 处理
+        UIImage *image = info[@"UIImagePickerControllerOriginalImage"];
+        
+        [self.assets addObject:image];
+        [self.selectAssets addObject:image];
+        
+        NSInteger count = self.selectAssets.count;
+        self.makeView.hidden = !count;
+        self.makeView.text = [NSString stringWithFormat:@"%ld",(long)count];
+        self.doneBtn.enabled = (count > 0);
+        
+        [picker dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        NSLog(@"请在真机使用!");
+    }
+}
+
 - (void)preview{
     MLSelectPhotoBrowserViewController *browserVc = [[MLSelectPhotoBrowserViewController alloc] init];
     [browserVc setValue:@(YES) forKeyPath:@"isEditing"];
     browserVc.photos = self.selectAssets;
     [self.navigationController pushViewController:browserVc animated:YES];
 }
+
+- (void)setTopShowPhotoPicker:(BOOL)topShowPhotoPicker{
+    _topShowPhotoPicker = topShowPhotoPicker;
+    
+    if (self.topShowPhotoPicker == YES) {
+        NSMutableArray *reSortArray= [[NSMutableArray alloc] init];
+        for (id obj in [self.collectionView.dataArray reverseObjectEnumerator]) {
+            [reSortArray addObject:obj];
+        }
+        
+        MLSelectPhotoAssets *mlAsset = [[MLSelectPhotoAssets alloc] init];
+        [reSortArray insertObject:mlAsset atIndex:0];
+        
+        self.collectionView.status = ZLPickerCollectionViewShowOrderStatusTimeAsc;
+        self.collectionView.topShowPhotoPicker = topShowPhotoPicker;
+        self.collectionView.dataArray = reSortArray;
+        [self.collectionView reloadData];
+    }
+}
+
 
 - (void) pickerCollectionViewDidSelected:(MLSelectPhotoPickerCollectionView *) pickerCollectionView deleteAsset:(MLSelectPhotoAssets *)deleteAssets{
     

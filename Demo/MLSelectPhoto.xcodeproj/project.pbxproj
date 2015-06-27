@@ -15,6 +15,7 @@
 		4800C79A1AE746F7000CE211 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4800C7981AE746F7000CE211 /* LaunchScreen.xib */; };
 		4800C7A61AE746F7000CE211 /* MLSelectPhotoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4800C7A51AE746F7000CE211 /* MLSelectPhotoTests.m */; };
 		4800C7B31AE74975000CE211 /* Example1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4800C7B21AE74975000CE211 /* Example1ViewController.m */; };
+		484AC9D61B3E443D009D3817 /* Example5ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 484AC9D51B3E443D009D3817 /* Example5ViewController.m */; };
 		48BD41791AEC8852006F880A /* UIImage+MLTint.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BD414E1AEC8852006F880A /* UIImage+MLTint.m */; };
 		48BD417A1AEC8852006F880A /* UIView+MLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BD41501AEC8852006F880A /* UIView+MLExtension.m */; };
 		48BD417B1AEC8852006F880A /* MLSelectPhotoAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BD41551AEC8852006F880A /* MLSelectPhotoAssets.m */; };
@@ -66,6 +67,8 @@
 		4800C7A51AE746F7000CE211 /* MLSelectPhotoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLSelectPhotoTests.m; sourceTree = "<group>"; };
 		4800C7B11AE74975000CE211 /* Example1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example1ViewController.h; sourceTree = "<group>"; };
 		4800C7B21AE74975000CE211 /* Example1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example1ViewController.m; sourceTree = "<group>"; };
+		484AC9D41B3E443D009D3817 /* Example5ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example5ViewController.h; sourceTree = "<group>"; };
+		484AC9D51B3E443D009D3817 /* Example5ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example5ViewController.m; sourceTree = "<group>"; };
 		48BD414D1AEC8852006F880A /* UIImage+MLTint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MLTint.h"; sourceTree = "<group>"; };
 		48BD414E1AEC8852006F880A /* UIImage+MLTint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MLTint.m"; sourceTree = "<group>"; };
 		48BD414F1AEC8852006F880A /* UIView+MLExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MLExtension.h"; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 				48E27E3F1AE753B300526405 /* Example3ViewController.m */,
 				48E27E641AE7B5BF00526405 /* Example4ViewController.h */,
 				48E27E651AE7B5BF00526405 /* Example4ViewController.m */,
+				484AC9D41B3E443D009D3817 /* Example5ViewController.h */,
+				484AC9D51B3E443D009D3817 /* Example5ViewController.m */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -399,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				484AC9D61B3E443D009D3817 /* Example5ViewController.m in Sources */,
 				48BD417B1AEC8852006F880A /* MLSelectPhotoAssets.m in Sources */,
 				48BD418B1AEC8852006F880A /* MLSelectPhotoPickerGroupTableViewCell.m in Sources */,
 				48BD417F1AEC8852006F880A /* MLSelectPhotoBrowserViewController.m in Sources */,

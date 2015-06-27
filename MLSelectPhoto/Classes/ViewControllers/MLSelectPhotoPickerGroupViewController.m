@@ -113,6 +113,7 @@
     MLSelectPhotoPickerAssetsViewController *assetsVc = [[MLSelectPhotoPickerAssetsViewController alloc] init];
     assetsVc.selectPickerAssets = self.selectAsstes;
     assetsVc.assetsGroup = gp;
+    assetsVc.topShowPhotoPicker = self.topShowPhotoPicker;
     assetsVc.groupVc = self;
     assetsVc.minCount = self.minCount;
     [self.navigationController pushViewController:assetsVc animated:NO];
@@ -131,6 +132,7 @@
     assetsVc.selectPickerAssets = self.selectAsstes;
     assetsVc.groupVc = self;
     assetsVc.assetsGroup = group;
+    assetsVc.topShowPhotoPicker = self.topShowPhotoPicker;
     assetsVc.minCount = self.minCount;
     [self.navigationController pushViewController:assetsVc animated:YES];
 }

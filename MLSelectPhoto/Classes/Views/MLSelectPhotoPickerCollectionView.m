@@ -81,23 +81,37 @@
     MLPhotoPickerImageView *cellImgView = [[MLPhotoPickerImageView alloc] initWithFrame:cell.bounds];
     cellImgView.maskViewFlag = YES;
     
-    // 需要记录选中的值的数据
-    if (self.isRecoderSelectPicker) {
-        for (MLSelectPhotoAssets *asset in self.selectAsstes) {
-            if ([asset.asset.defaultRepresentation.url isEqual:[self.dataArray[indexPath.item] asset].defaultRepresentation.url]) {
-                [self.selectsIndexPath addObject:@(indexPath.row)];
+    if(indexPath.item == 0 && self.topShowPhotoPicker){
+        UIImageView *imageView = [[cell.contentView subviews] lastObject];
+        // 判断真实类型
+        if (![imageView isKindOfClass:[UIImageView class]]) {
+            imageView = [[UIImageView alloc] initWithFrame:cell.bounds];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            imageView.clipsToBounds = YES;
+            [cell.contentView addSubview:imageView];
+        }
+        imageView.tag = indexPath.item;
+        imageView.image = [UIImage imageNamed:MLSelectPhotoSrcName(@"camera")];
+    }else{
+        
+        // 需要记录选中的值的数据
+        if (self.isRecoderSelectPicker) {
+            for (MLSelectPhotoAssets *asset in self.selectAsstes) {
+                if ([asset.asset.defaultRepresentation.url isEqual:[self.dataArray[indexPath.item] asset].defaultRepresentation.url]) {
+                    [self.selectsIndexPath addObject:@(indexPath.row)];
+                }
             }
         }
-    }
-    
-    [cell.contentView addSubview:cellImgView];
-    
-    cellImgView.maskViewFlag = ([self.selectsIndexPath containsObject:@(indexPath.row)]);
-    
-    MLSelectPhotoAssets *asset = self.dataArray[indexPath.item];
-    cellImgView.isVideoType = asset.isVideoType;
-    if ([asset isKindOfClass:[MLSelectPhotoAssets class]]) {
-        cellImgView.image = asset.thumbImage;
+        
+        [cell.contentView addSubview:cellImgView];
+        
+        cellImgView.maskViewFlag = ([self.selectsIndexPath containsObject:@(indexPath.row)]);
+        
+        MLSelectPhotoAssets *asset = self.dataArray[indexPath.item];
+        cellImgView.isVideoType = asset.isVideoType;
+        if ([asset isKindOfClass:[MLSelectPhotoAssets class]]) {
+            cellImgView.image = asset.thumbImage;
+        }
     }
     
     return cell;
@@ -106,6 +120,13 @@
 #pragma mark - <UICollectionViewDelegate>
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 
+    if (self.topShowPhotoPicker && indexPath.item == 0) {
+        if ([self.collectionViewDelegate respondsToSelector:@selector(pickerCollectionViewDidCameraSelect:)]) {
+            [self.collectionViewDelegate pickerCollectionViewDidCameraSelect:self];
+        }
+        return ;
+    }
+    
     if (!self.lastDataArray) {
         self.lastDataArray = [NSMutableArray array];
     }
