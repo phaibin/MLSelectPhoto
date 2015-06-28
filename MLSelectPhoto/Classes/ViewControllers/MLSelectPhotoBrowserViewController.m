@@ -220,6 +220,12 @@ static NSString *_cellIdentifier = @"collectionViewCell";
         
         self.collectionView.ml_x = -attachVal;
         self.collectionView.contentOffset = CGPointMake(self.currentPage * self.collectionView.ml_width, 0);
+        
+        if (self.currentPage == self.photos.count - 1 && self.photos.count > 1) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(00.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                self.collectionView.contentOffset = CGPointMake(self.currentPage * self.collectionView.ml_width, self.collectionView.contentOffset.y);
+            });
+        }
     }
     
     // 添加自定义View
@@ -271,13 +277,7 @@ static NSString *_cellIdentifier = @"collectionViewCell";
         scrollView.photo = photo;
         
         [scrollBoxView addSubview:scrollView];
-        
-        if (self.photos.count == 1) {
-            scrollView.ml_x = 0;
-        }else if (self.currentPage == self.photos.count - 1 && scrollView.ml_x >= 0 && !collectionView.isDragging) {
-            scrollView.ml_x = -ZLPickerColletionViewPadding;
-        }
-        
+        scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
     return cell;
 }
